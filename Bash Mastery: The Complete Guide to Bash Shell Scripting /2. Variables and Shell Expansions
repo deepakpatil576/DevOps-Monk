@@ -256,7 +256,7 @@ echo $((4 + 2))
 output - 6
 --------------------------------------------------------------------------------------------
 
-vim arithmetic (using varible)
+vim arithmetic (using variable)
 
 #!/bin/bash
 
@@ -315,19 +315,156 @@ Summary -
 - Order of precedence
 
 --------------------------------------------------------------------------------------------
-Dealing with 
+Dealing with decimal numbers - the bc command
 --------------------------------------------------------------------------------------------
 
+- How to use bc command
+- Use the bc comamnd to execute the mathematical expressions that require decimal values in your scripts
+- Set the scale variable within the bc command to control how many decimal places are given in the output of the bc command
 
 
+bc - basic calculator
+
+Run - bc
+
+bc 1.07.1
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2017 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'. 
+2 + 2
+4
+3.2 + 1
+4.2
+--------------------------------------------------------------------------------------------
+example - 1
+
+echo "5/2" | bc
+output - 1
+
+example - 2
+
+echo "scale=2"; 5/2 | bc
+output 
+2.50
+
+# summary 
+
+- The bc command allows us to perform calculations with decimal numbers
+- The syantax for the bc commands is: echo "expression" | bc
+- you can use the scale variable to control the number of decimal places that are included in the output
+- For example echo "scale=5; 10/3" | bc
+- in bc command exponentiation syntax is different a ^ b rather than a**b
+
+--------------------------------------------------------------------------------------------------------
+Tilde Expansion
+--------------------------------------------------------------------------------------------------------
+
+Learn - 
+- what is tilde expansion 
+- use cases 
+- easily access your home directory and the other directory of other users
+- easily switch between your current and previous working directories
+
+~ current user home directory 
+
+dipak.patil@BETWA:~$ echo ~
+/home/dipak.patil
+
+dipak.patil@BETWA:~$ echo ~aurochs_admin  #to check other users home directory
+/home/aurochs_admin
+
+dipak.patil@BETWA:~$ echo ~root
+/root
+
+dipak.patil@BETWA:~$ pwd
+/home/dipak.patil
+
+dipak.patil@BETWA:/etc$ echo $PWD
+/etc
+
+~+ = pwd
+~- = old pwd
+
+dipak.patil@BETWA:/etc$ echo $PWD
+/etc
+dipak.patil@BETWA:/etc$ cd ~-
+dipak.patil@BETWA:~$ 
+
+Summary - 
+
+Use case - Tilde expansion within the shell is useful when writing scripts that need to work across multiple directories
+By default ~ will expands to the current user's home directory
+~+ is the same as $PWD and ~- is the same as $OLDPWD
+
+--------------------------------------------------------------------------------------------------------
+Brace Expansion
+--------------------------------------------------------------------------------------------------------
+
+- How to use brace expansion generate text that follow particular patterns of your choosing 
+- Use brace expansion in commands to massively scale up their effectiveness
+
+string list  - {} 
+Range list - 1-100
 
 
+echo {a,20,deepak,47}
+output -  a 2 deepak 47
+
+echo {jan,feb,mar,apr}
+output - jan feb mar apr
+
+echo {jan,feb,mar,apr, may} # if there is space then entire string with {}
+output - {jan,feb,mar,apr, may}
+
+echo {  jan,feb,mar,apr,may}
+output - {  jan,feb,mar,apr,may}
+
+--------------------------------------------------------------------------------------------------------
+
+Range List - 
+
+dipak.patil@BETWA:~$ echo {1..10}
+1 2 3 4 5 6 7 8 9 10
+
+dipak.patil@BETWA:~$ echo {10..1}
+10 9 8 7 6 5 4 3 2 1
+
+dipak.patil@BETWA:~$ echo {a..z}
+a b c d e f g h i j k l m n o p q r s t u v w x y z
+
+dipak.patil@BETWA:~$ echo {1..50}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
 
 
+stepwise 
+
+dipak.patil@BETWA:~$ echo {1..50..3}
+1 4 7 10 13 16 19 22 25 28 31 34 37 40 43 46 49
+
+dipak.patil@BETWA:~$ echo {1..Z}  # Not working becouse of sequence is not correct
+{1..Z}
+
+dipak.patil@BETWA:~$ echo month{1..12}
+month1 month2 month3 month4 month5 month6 month7 month8 month9 month10 month11 month12
+
+dipak.patil@BETWA:~$ echo month{01..12}
+month01 month02 month03 month04 month05 month06 month07 month08 month09 month10 month11 month12
 
 
+dipak.patil@BETWA:~/shell-scripting$ echo month{01..12}/day{01..10}
+month01/day01 month01/day02 month01/day03 month01/day04 month01/day05 month01/day06 month01/day07 month01/day08 month01/day09 month01/day10 month02/day01 month02/day02 month02/day03 month02/day04 month02/day05 month02/day06 month02/day07 month02/day08 month02/day09 month02/day10 month03/day01 month03/day02 month03/day03 month03/day04 month03/day05 month03/day06 month03/day07 month03/day08 month03/day09 month03/day10 month04/day01 month04/day02 month04/day03 month04/day04 month04/day05 month04/day06 month04/day07 month04/day08 month04/day09 month04/day10 month05/day01 month05/day02 month05/day03 month05/day04 month05/day05 month05/day06 month05/day07 month05/day08 month05/day09 month05/day10 month06/day01 month06/day02 month06/day03 month06/day04 month06/day05 month06/day06 month06/day07 month06/day08 month06/day09 month06/day10 month07/day01 month07/day02 month07/day03 month07/day04 month07/day05 month07/day06 month07/day07 month07/day08 month07/day09 month07/day10 month08/day01 month08/day02 month08/day03 month08/day04 month08/day05 month08/day06 month08/day07 month08/day08 month08/day09 month08/day10 month09/day01 month09/day02 month09/day03 month09/day04 month09/day05 month09/day06 month09/day07 month09/day08 month09/day09 month09/day10 month10/day01 month10/day02 month10/day03 month10/day04 month10/day05 month10/day06 month10/day07 month10/day08 month10/day09 month10/day10 month11/day01 month11/day02 month11/day03 month11/day04 month11/day05 month11/day06 month11/day07 month11/day08 month11/day09 month11/day10 month12/day01 month12/day02 month12/day03 month12/day04 month12/day05 month12/day06 month12/day07 month12/day08 month12/day09 month12/day10
 
+dipak.patil@BETWA:~/shell-scripting$ echo month{01..05}/day{01..05}.txt
+month01/day01.txt month01/day02.txt month01/day03.txt month01/day04.txt month01/day05.txt month02/day01.txt month02/day02.txt month02/day03.txt month02/day04.txt month02/day05.txt month03/day01.txt month03/day02.txt month03/day03.txt month03/day04.txt month03/day05.txt month04/day01.txt month04/day02.txt month04/day03.txt month04/day04.txt month04/day05.txt month05/day01.txt month05/day02.txt month05/day03.txt month05/day04.txt month05/day05.txt
 
+# Summary - 
+- There are 2 types of brace expansion
+- string list:{1,2,4,deepak,devops}
+- range list:{1..1000}
+- Followed by required increment: {1..1000..3}
+- Use leading zeroes to make sure that all values you expand have the same number of digits:{001..100}
+
+--------------------------------------------------------------------------------------------------------
 
 
 
