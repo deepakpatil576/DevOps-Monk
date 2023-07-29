@@ -1,0 +1,68 @@
+chmodcalculator.com
+
+------------------------------------------------------------------------------------------------
+#!/bin/bash
+
+#Author :
+#Date Created :
+#Date Modified :
+
+#Description :
+#Usage 
+
+------------------------------------------------------------------------------------------------
+command 
+
+file filename
+
+#Example
+
+dipak.patil@BETWA:~/workspace/ph2023/platform-hunt$ file app.py 
+app.py: Python script, ASCII text executable
+-------------------------------------------------------------------------------------------------
+- Read and interpret file permissions
+- Use chmod to change the file permision 
+- The recommended file permissin for scripts - 744
+
+-------------------------------------------------------------------------------------------------
+Backup Script
+
+vim backupscript
+
+permission 0754
+
+chmod 754 backupscript
+-------------------------------------------------------------------------------------------------
+#!/bin/bash
+
+#Author :
+#Date Created :
+#Date Modified :
+
+#Description :
+#Usage 
+
+tar-cvf ~/bash_course/my_backup_"$(date +%d-%m-%Y_%H-%M-%S)".tar ~/* 2>/dev/null
+exit 0
+
+-------------------------------------------------------------------------------------------------
+
+# Adding scripts to your PATH
+
+- Explain the purpose of your PATH variable
+- Add new directories to your PATH 
+- Run your scripts from anywhere on your system
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------
+
+
+
+
+
