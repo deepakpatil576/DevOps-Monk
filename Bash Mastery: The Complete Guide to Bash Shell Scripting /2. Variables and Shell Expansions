@@ -1,0 +1,93 @@
+2. Variables and Shell Expansions
+
+---------------------------------------------------------------------------------------------
+User-defined Variables and Parameter expansions
+---------------------------------------------------------------------------------------------
+
+- What parameters and variables are ?
+- How to create variables and retrive values from them ?
+
+Learn - 
+- Create your own variable to store data under convenient names
+- Use parameter expansion to retrive that data and use it as the input commands 
+
+Parameter - Any entity that stores values
+
+Typs - 
+1. Varibles
+2. Positional parameters
+3. Special Parameters
+
+---------------------------------------------------------------------------------------------
+1. Varibles - "a parameter whose values you can manually change"
+
+#!bin/bash 
+variable="name"
+
+example 
+
+#!bin/bash 
+student="deepak"
+echo "Hello ${student}"
+
+
+Note - no space between = sign and varible
+${student} - Known as shell expansion 
+
+Key points - 
+- A paramter is an entity that can store values
+- Varible (most common)
+- Positional parameters
+- Special parameters
+
+- Creating a variable : name=value (No spaces around = sign!)
+- Retrieving a value : ${parameter}
+
+
+---------------------------------------------------------------------------------------------
+Shell Variables
+---------------------------------------------------------------------------------------------
+
+Learn - 
+- Explain the differnce between bourne shell variable and bash shell variable
+- Explain the purpose of the PATH, HOME ,USER, HOSTNAME , HOSTTYPE and PS1 shell varibles
+- Access the data held in these varibles for yourself
+
+1. bourne shell variable -
+
+- Bourne shell (created by Stephen Bourne 1979)
+- 10 in total 
+
+2. bash shell variable - 
+
+- Based on the Bourne shell  , 
+- Bourne Again Shell (BASH)
+- 95 in total 
+
+---------------------------------------------------------------------------------------------
+Common shell variables 
+
+# The PATH variable contains the list of folders that the shell will search for executable files to run as command names 
+
+Run - echo ${PATH}  # To show PATH variables
+
+# The HOME variable is used to store the absolute path to the current user's home directory
+
+Run - echo ${HOME}
+
+dipak.patil@BETWA:~$ echo $HOME
+/home/dipak.patil
+
+# The user variable contains the username of the current user
+
+Run - echo "Hello $USER"
+
+dipak.patil@BETWA:~$ echo "Hello $USER"
+Hello dipak.patil
+
+# The 
+
+
+
+
+
