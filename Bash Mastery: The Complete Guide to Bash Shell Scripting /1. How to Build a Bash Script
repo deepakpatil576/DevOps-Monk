@@ -54,13 +54,49 @@ exit 0
 - Run your scripts from anywhere on your system
 
 
+Run 
+ech "PATH"
 
+dipak.patil@BETWA:~$ echo "$PATH"
+/home/dipak.patil/.nvm/versions/node/v16.20.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
+mkdir scripts
+mv our_fisrt_script
+cd ~
+vim ~./profile
 
+export PATH="$PATH:$HOME/bash_course/scripts"
 
+override the path variable
 
+source ~/.profile # to reload profile file 
+
+Now you run your script anywhere from your system
+
+Notes - 
+
+- The PATH variable tells the shell where to search for executable files
+- We can add folders to our PATH varible by modifying .profile file
+- We can make our scprit accessible system-wide by putting them into a folder covered by our PATH
+- Important Note - Try to avoid giving your scripts names that may conflict with another command on the system
 
 -------------------------------------------------------------------------------------------------
+
+Summary 
+
+- SHEBANG LINE 
+- BASH COMMANDS
+- EXIT STATEMENTS 0 successful run & 1-255 Non successful run 
+- Prodfessional components 
+- permission-calculator.org
+- chmod command
+- Recommonded permision - 744
+- Shell vs Scripts
+
+
+
+
+
 
 
 
