@@ -1,0 +1,317 @@
+3. How Bash Processes Command Lines ?
+
+Step 1 - Tokenisation 
+
+Token - a sequence of charecters that is considered as a single unit by the shell
+
+Metacharacters - 
+|
+&
+;
+()
+<>
+space,tab,and newline
+
+- The diffreence between words and operators is: words never contains unquoted metacharacters, operators always contain unquoted metacharacters
+
+------------------------------------------------------------------------------------------------------
+Step 2 - Command Identification
+
+Simple commands are just a bunch of individual words and each simple command is terminated by a control operator
+
+Compound commands on the other hand provide bash with its programmming contsructs such as if statement , for loops , while loops 
+------------------------------------------------------------------------------------------------------
+Step 3 - Expansions
+
+Step 4 - Quote Removal 
+
+Step 5 - Redirection 
+
+After completing thease 5 steps bash will then execute the command line that is left over 
+
+==========================================================================================================
+Quoting
+==========================================================================================================
+
+- 3 types of quoting in bash 
+
+1.backslashes
+2.single quotes 
+3.double quotes 
+
+Quoting is about removing special meaning 
+
+1. Backslash (\) - Removes meaning from next character. 
+2. Single Quotes ('') - Removes special meaning from all characters inside.
+3. Double Quotes ("") - Removes special meaning from all expect doller signs ($) and backticks (`)
+
+Examples - 
+-------------------------------------------------------------------------------------------
+dipak.patil@BETWA:~/shell-scripting$ echo deepak & bhushan
+[3] 142663
+deepak
+bhushan: command not found
+[3]   Done                    echo deepak
+
+-------------------------------------------------------------------------------------------
+dipak.patil@BETWA:~/shell-scripting$ echo deepak \& bhushan
+deepak & bhushan
+-------------------------------------------------------------------------------------------
+dipak.patil@BETWA:~/shell-scripting$ filepath=C:\Users\Admin\Documents
+dipak.patil@BETWA:~/shell-scripting$ echo $filepath
+C:UsersAdminDocuments           #here file path is incorrect 
+-------------------------------------------------------------------------------------------
+#Now using \ filepath is printed correctly 
+
+dipak.patil@BETWA:~/shell-scripting$ filepath=C:\\Users\\Admin\\Documents
+dipak.patil@BETWA:~/shell-scripting$ echo $filepath
+C:\Users\Admin\Documents
+
+-------------------------------------------------------------------------------------------
+using single quote 
+
+dipak.patil@BETWA:~/shell-scripting$ filepath='C:\Users\Admin\Documents'
+dipak.patil@BETWA:~/shell-scripting$ echo $filepath
+C:\Users\Admin\Documents
+-------------------------------------------------------------------------------------------
+Using double quotes ("")
+incorrect using single quote 
+
+dipak.patil@BETWA:~/shell-scripting$ filepath='C:\Users\$USER\Documents'
+dipak.patil@BETWA:~/shell-scripting$ echo $filepath
+C:\Users\$USER\Documents
+
+using double quote 
+dipak.patil@BETWA:~/shell-scripting$ filepath="C:\Users\\$USER\Documents"
+dipak.patil@BETWA:~/shell-scripting$ echo $filepath
+C:\Users\dipak.patil\Documents
+
+==========================================================================================================
+Step 1: Tokenisation
+==========================================================================================================
+
+Learn  - 
+- Explain the purpose of the tokenisation step 
+- Identify the two types of tokens and their subtypes 
+- Explain the purpose of metacharacters in the tokenisation step
+- Explain the effect of quotes on tokenisation 
+
+Token - a sequence of characters that is considered as a single unit by the shell
+
+Metacharacters - 
+|
+&
+;
+()
+<>
+space,tab,and newline
+
+Wheather or not token contains an unqouted metacharacters
+
+# 2 types of operators 
+
+Type 1 - control operators 
+
+Newline 
+|    ;;
+||    :&
+&     ;;& 
+&&     |&
+;      )
+      (
+
+Type 2 - Redirectional Operators 
+
+<  >|
+>  <<-
+<<  <>
+>>  >&
+<& 
+
+Note - control operators + Redirectional operators only matters if they are unquoted
+
+Summary - 
+
+- Unqouted metacharacters distinguish tokens
+- Decide if a tokem is a word or operator 
+- Classify operators as control or redirection operator 
+
+Examples 
+
+echo $name > out.txt  
+
+==========================================================================================================
+Step 2: Command Identifications
+==========================================================================================================
+
+- What simple commands and compound commands are 
+- How the shell distinguishes between them
+- How the shell deteermines where they start and end
+- Simple and compound commands 
+
+1. Simple commands
+2. Compound commands
+
+1. Simple commands examples - 
+
+dipak.patil@BETWA:~/shell-scripting$ echo a b c echo 1 2 3
+a b c echo 1 2 3
+
+dipak.patil@BETWA:~/shell-scripting$ echo a b c; echo 1 2 3
+a b c
+1 2 3
+
+------------------------------------------------------------------------------------------
+2. Compound commands
+
+- Compound commands are essentailly bash's programming construsts
+- Each compound commands starts with a reseverd word and is terminated by a corresponding reserved word 
+
+
+Examples 
+
+if[[2 -gt 1]];then
+    echo "Hello World"
+fi
+
+
+==========================================================================================================
+Step 3: EXxpansions
+==========================================================================================================
+
+- List of 4 stages that the shell goes through when performing shell expansions
+- Effect of precedence of the expansions on the order in which shell expansions are performed 
+
+4 Stages - 
+
+Stage 1 -  Brace Expansion
+Stage 2 - 
+          Parameter Expansion 
+          Arithemetic Expansion
+          Command Substitution
+          Tilde Expansion
+Stage 3 - Word Splitting 
+Stage 4 - Globbing 
+
+
+Example - 
+x=10
+echo {1..$x}  # not working
+
+
+#The second thing you need to know is that expansions 
+that are in the same stage are all given the same priority and are simply peerformed in the order 
+they are found on the command line when it is read from left to right 
+
+exa - echo $name has $((1 + 2 ))apples 
+ 
+Notes - here 1st $name execute then $(( 1 + 2))
+
+exa - echo $name has {1..3}apples and $(( 5 + 2))oranges
+
+here brace expansion will executes 1st then arithmetic expansion then 
+
+
+==========================================================================================================
+Step 3: Word Splitting  
+==========================================================================================================
+
+ - What is word splitting 
+ - How bash performs word splitting on the result of certain expansions 
+ - How you can set the IFS shell variable to control how word splitting is performed 
+
+  Word Splitting  - a process the shell performs to split the result of some unquoted expansions into separate words
+
+  Word splitting is only performed on the results of unquotesd:
+  - parameter expansion 
+  - command expansion 
+  - arithmetic expansion
+
+IFS - Internal Field Separator 
+space tab newline
+
+dipak.patil@BETWA:~/shell-scripting$ echo "${IFS}"
+ 	
+
+dipak.patil@BETWA:~/shell-scripting$
+
+---------------------------------------------------------------------------
+dipak.patil@BETWA:~/shell-scripting$ echo "${IFS@Q}"
+$' \t\n'
+dipak.patil@BETWA:~/shell-scripting$ 
+
+---------------------------------------------------------------------------
+dipak.patil@BETWA:~/shell-scripting$ numbers="1 2 3 4 5"
+dipak.patil@BETWA:~/shell-scripting$ touch $numbers
+dipak.patil@BETWA:~/shell-scripting$ ls 
+1  3  5             devops1.txt  devops3.txt  devops5.txt  devops7.txt  devops9.txt
+2  4  devops10.txt  devops2.txt  devops4.txt  devops6.txt  devops8.txt  out
+dipak.patil@BETWA:~/shell-scripting$ 
+---------------------------------------------------------------------------
+
+dipak.patil@BETWA:~/shell-scripting$ numbers=1,2,3,4,5
+dipak.patil@BETWA:~/shell-scripting$ touch $numbers
+dipak.patil@BETWA:~/shell-scripting$ rm {1..5}
+dipak.patil@BETWA:~/shell-scripting$ ls -la
+total 12
+drwxrwxr-x  2 dipak.patil dipak.patil 4096 Jul 29 17:46 .
+drwxr-xr-x 29 dipak.patil dipak.patil 4096 Jul 29 14:38 ..
+-rw-rw-r--  1 dipak.patil dipak.patil    0 Jul 29 17:46 1,2,3,4,5
+---------------------------------------------------------------------------
+
+dipak.patil@BETWA:~/shell-scripting$ IFS=","
+dipak.patil@BETWA:~/shell-scripting$ touch $numbers
+dipak.patil@BETWA:~/shell-scripting$ ls -la
+total 12
+drwxrwxr-x  2 dipak.patil dipak.patil 4096 Jul 29 17:47 .
+drwxr-xr-x 29 dipak.patil dipak.patil 4096 Jul 29 14:38 ..
+-rw-rw-r--  1 dipak.patil dipak.patil    0 Jul 29 17:47 1
+-rw-rw-r--  1 dipak.patil dipak.patil    0 Jul 29 17:46 1,2,3,4,5
+-rw-rw-r--  1 dipak.patil dipak.patil    0 Jul 29 17:47 2
+-rw-rw-r--  1 dipak.patil dipak.patil    0 Jul 29 17:47 3
+-rw-rw-r--  1 dipak.patil dipak.patil    0 Jul 29 17:47 4
+-rw-rw-r--  1 dipak.patil dipak.patil    0 Jul 29 17:47 5
+
+---------------------------------------------------------------------------
+dipak.patil@BETWA:~/shell-scripting$ rm {1..5}
+dipak.patil@BETWA:~/shell-scripting$ rm 1,2,3,4,5
+---------------------------------------------------------------------------
+Simple Rule 
+
+If you want to output of a :
+  1. parameter expansion
+  2. arithmetic expansion
+  3. a command substitution
+to be considered as a single word:
+   wrap that expansion in double quotes:
+
+Summary - 
+- The default value of the IFS variable is space tab and new line 
+- you can change the value of IFS variable to manipulate the results of word splitting 
+
+
+==========================================================================================================
+Globbing 
+==========================================================================================================
+
+- Whats is glogging 
+
+- Originates from the "glob" program present in early version of Bell Labs Unix operating system from 1969-1975
+- Globbing is used as a shortcut for listing the files that a command should operate on
+- Globbing is only performed on word (not operators)
+- Globbing patters are words that contains unquoted spacial pattern characters
+*
+?
+[
+- 
+
+
+
+
+
+      
+
+
+
+
+
