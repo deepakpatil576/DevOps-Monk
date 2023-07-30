@@ -305,11 +305,209 @@ Globbing
 [
 - 
 
+Note - pending 
+
+==========================================================================================================
+Step 4: Quote Removal
+==========================================================================================================
+
+Learn - 
+- How quote removal works
+
+3 type of quote 
+- Backslash \
+- single quote ''
+- double quote ""
+
+# During the quote removal, the shell removes all unquoted backslashes, single quote characters and double quote characters that did not result from
+shell expansions
+
+echo \$HOME
+
+dipak.patil@BETWA:~/shell-scripting$ echo \$HOME
+$HOME
+
+dipak.patil@BETWA:~/shell-scripting$ echo $HOME
+/home/dipak.patil
+
+
+dipak.patil@BETWA:~/shell-scripting$ echo '\$HOME'
+\$HOME     #Note - single quote removed 
+
+dipak.patil@BETWA:~/shell-scripting$ path="C:\Users\deepak\Documents"
+dipak.patil@BETWA:~/shell-scripting$ echo $path
+C:\Users\deepak\Documents
+
+Summary - 
+- Quote removal is the process that bash uses to remove redundant quotes from the final command
+- The shell will remove from the final command any unquoted backslashes, single quote characters and double quote characters that did not result from 
+an expansion
+
+
+==========================================================================================================
+Step 5: Redirection
+==========================================================================================================
+
+- Redirect standard output and std err to a file 
+- Append stdout & stderrr to a file 
+- Redirect standard input to choose input sources for any commands
+
+
+Data Steams 
+ Stream 0 = Standard Input (stdin)   
+ Stream 1 = Standard Output (stdout)
+ Stream 2 = Standard Error (stderr)
+
+Standard input provide us with an alternative  way of providing input  to a command aside from using command line argument
+Standard output contains the data that is produced after a successful command execution
+Standard error contains all error messages and status messages that a command produces 
+
+             --------> 1 stdout ( > )
+0 stdin ------>command 
+             -------->2  stderr
+
+dipak.patil@BETWA:~/shell-scripting$ cat 
+^Z
+[3]+  Stopped                 cat
+
+dipak.patil@BETWA:~/shell-scripting$ cat < hello.txt 
+hello world
+
+dipak.patil@BETWA:~/shell-scripting$ echo "this is some output" > output.txt
+dipak.patil@BETWA:~/shell-scripting$ 
+
+dipak.patil@BETWA:~/shell-scripting$ cat output.txt 
+this is some output
+
+
+dipak.patil@BETWA:~/shell-scripting$ cd /root/
+bash: cd: /root/: Permission denied
+
+dipak.patil@BETWA:~/shell-scripting$ cd /root > error.txt
+bash: cd: /root: Permission denied
+
+dipak.patil@BETWA:~/shell-scripting$ cd /root 2> error.txt  # Now error message is not visible in terminal 
+dipak.patil@BETWA:~/shell-scripting$ cat error.txt 
+bash: cd: /root: Permission denied
+
+# Note - /dev/null-  whatever data inside /dev/null will deleted immediatly 
+
+dipak.patil@BETWA:~/shell-scripting$ cd /root &> /dev/null
+
+# save space 
+
+>> append the data
+2>> std err
+&>> stderr & stdout
+
+Summary - 
+
+- streams can only connect to one location at a time 
+- Redirection is about changing where these streams connect to 
+- Redirection operators each have one operand 
+
+==========================================================================================================
+Example 1
+==========================================================================================================
+
+echo $name > out 
+
+# parameter definiation 
+name="dipak.patil"
+out="output.txt"
+
+step 1 - tokenisation  - Identify unquoted metacharacters ... find word and operattors 
+
+word - echo name out 
+
+step 2 - command indentification 
+ here shell only found 1 command 
+echo $name > out 
+
+step 3 - Expansion 
+
+stage 1 Brace 
+stage 2 arithemetic
+stage 3 word spliting 
+stage 4 Globbing 
+
+here we have 
+echo dipak.patil > output.txt 
+
+there is not word splitting becouse teh results of the expansions do not contains space tab and newline character 
+there is no globbing here
+
+step 4 - Qoute removal 
+there is not quote removal 
+
+step 5 - Redirection 
+here one redirection operator present 
+
+finally output executed
 
 
 
-j
-      
+==========================================================================================================
+Example 2
+==========================================================================================================
+
+#!/bin/bash 
+
+IFS="."
+name="dipak.patil"
+out="output.txt"
+
+echo "$name" > "~/$out"
+
+step 1 Tokenization 
+
+identify unquoted metacharacters - here space betn echo & name and greater than symbol
+find word and operator
+
+echo "$name" > "~/$out" 
+
+step 2 command Indentification 
+
+echo "$name" > "~/$out"
+
+here shell find simple command 
+
+step 3 expansion 
+
+echo "dipak.patil" > "~/$out"
+
+1 shell checks brace expansions
+2 shell check aarithmetic expansions
+3 word splitting 
+
+echo "dipak.patil" > "~/$output.txt"
+
+echo $name > "$HOME/$out"
+
+Step 4 quote removal 
+echo 
+
+Step 5 redirectin 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
